@@ -1,0 +1,47 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+img {
+  height: auto;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  min-width: $min-width;
+  font-family: "Consolas", "Arial", sans-serif;
+  font-size: 18px;
+  line-height: 24px;
+  font-weight: 400;
+  color: $text-basic;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+
+  border: 0;
+
+  clip: rect(0 0 0 0);
+  overflow: hidden;
+}
+
+.container {
+  margin: 0 auto;
+  padding: 0 20px;
+  max-width: 600px;
+}
+
+
+@media (min-width: $desktop-width) {
+  .container {
+    padding: 0 64px;
+    max-width: 866px;
+  }
+}
