@@ -3,8 +3,8 @@ module.exports = {
   entry: {
     index: [
       './source/js/scroll.js',
-      './source/js/select.js',
-      './source/js/slider.js',
+      './source/js/popup.js',
+      './source/js/main.js',
     ],
   },
   devtool: 'source-map',

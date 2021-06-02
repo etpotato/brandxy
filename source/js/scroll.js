@@ -1,58 +1,76 @@
-const MEDIA_DESKTOP = '(min-width: 768px)';
+const scrollBar = document.querySelector('.info__scroll');
+const scrollKnob = scrollBar.querySelector('.info__scroll-knob');
+const textTrack = document.querySelector('.info__track');
+const text = textTrack.querySelector('.info__text');
 
-const imageWrapper = document.querySelector('.article__image-wrapper');
-const image = imageWrapper.querySelector('.article__image');
-const scrollBar = document.querySelector('.article__figure-scrollbar');
-const scrollThumb = scrollBar.querySelector('.article__figure-scrollthumb');
+let scrollKnobMaxTop,
+  scrollKnobCurrentTop,
+  scrollKnobPushY,
+  textInitialY,
+  textMaxOffset;
 
-let scrollThumbMaxLeft = null;
-let imageInitialX = null;
-let imageMaxOffset = null;
-
-const onImageWrapperScroll = () => {
+const onTextTrackScroll = () => {
+  const currentOffset = (textInitialY - text.getBoundingClientRect().y) / textMaxOffset;
+  const scrollKnobOffset = scrollKnobMaxTop * currentOffset;
+  let scrollKnobTop;
+  if (scrollKnobOffset <= 0) {
+    scrollKnobTop = 0;
+  } else if (scrollKnobOffset >= scrollKnobMaxTop) {
+    scrollKnobTop = scrollKnobMaxTop;
+  } else {
+    scrollKnobTop = scrollKnobOffset;
+  }
   requestAnimationFrame(() => {
-    const currentOffset = (imageInitialX - image.getBoundingClientRect().x) / imageMaxOffset;
-    const srcollThumbOffset = scrollThumbMaxLeft * currentOffset;
-    let srcollThumbLeft = null;
-
-    if (srcollThumbOffset <= 0) {
-      srcollThumbLeft = 0;
-    } else if (srcollThumbOffset >= scrollThumbMaxLeft) {
-      srcollThumbLeft = scrollThumbMaxLeft;
-    } else {
-      srcollThumbLeft = srcollThumbOffset;
-    }
-
-    scrollThumb.style.left = `${srcollThumbLeft}%`;
+    scrollKnob.style.top = `${scrollKnobTop}px`;
   });
 };
 
-const onMobileResize = () => {
-  scrollThumbMaxLeft = (scrollBar.getBoundingClientRect().width - scrollThumb.getBoundingClientRect().width) / scrollBar.getBoundingClientRect().width * 100;
-  imageInitialX = imageWrapper.getBoundingClientRect().x;
-  imageMaxOffset = image.getBoundingClientRect().width - imageWrapper.getBoundingClientRect().width;
-
-  onImageWrapperScroll();
+const onScrollKnobPush = (evt) => {
+  scrollKnobPushY = evt.y;
+  scrollKnobCurrentTop = Number.parseInt(evt.target.style.top);
+  textTrack.removeEventListener('scroll', onTextTrackScroll);
+  document.addEventListener('pointermove', onScrollKnobMove);
+  document.addEventListener('pointerup', onScrollKnobRelease);
+  document.addEventListener('pointercancel', onScrollKnobRelease);
 };
 
-imageWrapper.classList.remove('article__image-wrapper--no-js');
-
-const media = window.matchMedia(MEDIA_DESKTOP);
-
-if (!media.matches) {
-  onMobileResize();
-  imageWrapper.addEventListener('scroll', onImageWrapperScroll);
-  window.addEventListener('resize', onMobileResize);
-}
-
-media.addEventListener('change', (evt) => {
-  if (evt.matches) {
-    imageWrapper.removeEventListener('scroll', onImageWrapperScroll);
-    window.removeEventListener('resize', onMobileResize);
-    return;
+const onScrollKnobMove = (evt) => {
+  const scrollKnobCurrentOffset = scrollKnobCurrentTop + evt.y - scrollKnobPushY;
+  let scrollKnobTop;
+  if (scrollKnobCurrentOffset <= 0) {
+    scrollKnobTop = 0;
+  } else if (scrollKnobCurrentOffset >= scrollKnobMaxTop) {
+    scrollKnobTop = scrollKnobMaxTop;
+  } else {
+    scrollKnobTop = scrollKnobCurrentOffset;
   }
+  const textCurrentOffset = (scrollKnobTop / scrollKnobMaxTop) * textMaxOffset;
+  requestAnimationFrame(() => {
+    scrollKnob.style.top = `${scrollKnobTop}px`;
+    textTrack.scroll(0, textCurrentOffset);
+  });
+};
 
-  onMobileResize();
-  imageWrapper.addEventListener('scroll', onImageWrapperScroll);
-  window.addEventListener('resize', onMobileResize);
-});
+const onScrollKnobRelease = () => {
+  textTrack.addEventListener('scroll', onTextTrackScroll);
+  document.removeEventListener('pointermove', onScrollKnobMove);
+  document.removeEventListener('pointerup', onScrollKnobRelease);
+  document.removeEventListener('pointercancel', onScrollKnobRelease);
+};
+
+const onDocumentScroll = () => {
+  textInitialY = textTrack.getBoundingClientRect().y;
+};
+
+const onWindowResize = () => {
+  textMaxOffset = text.getBoundingClientRect().height - textTrack.getBoundingClientRect().height;
+  scrollKnobMaxTop = scrollBar.getBoundingClientRect().height - scrollKnob.getBoundingClientRect().height;
+  onDocumentScroll();
+  onTextTrackScroll();
+};
+
+window.addEventListener('load', onWindowResize, {once: true});
+window.addEventListener('resize', onWindowResize);
+document.addEventListener('scroll', onDocumentScroll);
+scrollKnob.addEventListener('pointerdown', onScrollKnobPush);
+textTrack.addEventListener('scroll', onTextTrackScroll);
