@@ -1,29 +1,16 @@
 // Colors
 
-$accent: #0062ff;
-$accent-link: #0035ff;
+$accent: hsl(339, 100%, 71%);
+$accent-minor: hsl(200, 67%, 73%);
 
-$text-basic-light3: #777777;
-$text-basic-light2: #656565;
-$text-basic-light1: #272522;
-$text-basic: #202326;
-$text-basic-dark1: #1a1a1a;
-$text-basic-dark2: #000000;
-$text-basic-input: #222222;
-$text-invert: #ffffff;
+$text-basic: hsl(0, 0%, 16%);
 
-$borderline-light: #dcdcdc;
-$borderline-dark: #dbdbdb;
-$border-input: #e6e6e6;
+$background-basic: hsl(0, 0%, 100%);
 
-$background-basic: #ffffff;
-$background-neutral: #ededed;
+$shadow: hsl(199, 36%, 91%);
+$shadow-dark: hsl(199, 36%, 30%);
 
-$outline: #7f7f7f;
-
-$shadow-select: 0 2px 15px rgba(154, 154, 154, 0.5);
-
-$slider-dot: #cccccc;
+$underlay: hsla(0, 0%, 0, 0.7);
 
 // Star rating
 

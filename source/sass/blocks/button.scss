@@ -1,0 +1,33 @@
+.button {
+  position: relative;
+  display: block;
+  margin: 0;
+  padding: 24px 40px 24px 88px;
+  width: 100%;
+  border-radius: 100em;
+  font-size: 24px;
+  line-height: 32px;
+  font-weight: 400;
+  color: $text-basic;
+  background-color: $accent;
+  text-decoration: none;
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 12px;
+    transform: translateY(-50%);
+
+    width: 60px;
+    height: 60px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 100%;
+    background-image: url("../img/arrow.png");
+  }
+
+  &--plus::before {
+    background-image: url("../img/plus.png");
+  }
+}

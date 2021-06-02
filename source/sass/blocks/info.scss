@@ -1,0 +1,111 @@
+.info {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  column-gap: 25px;
+  row-gap: 32px;
+  padding-right: 88px;
+}
+
+.info__title {
+  grid-column: 1 / -1;
+  margin: 0;
+  font-size: 28px;
+  line-height: 34px;
+  font-weight: 300;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.info__scroll {
+  position: relative;
+  width: 25px;
+  touch-action: none;
+  user-select: none;
+}
+
+.info__scroll-track {
+  margin: 65px auto;
+  width: 5px;
+  height: calc(100% - (65px * 2));
+  border-radius: 100em;
+  background-color: $text-basic;
+}
+
+.info__scroll-knob {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 25px;
+  height: 130px;
+  background-repeat: no-repeat;
+  background-size: 100%;
+  background-position: center;
+  background-image: url("../img/knob.png");
+  transition-property: top;
+  transition-duration: 50ms;
+}
+
+.info__slider {
+  position: relative;
+  padding: 8px 32px;
+  border-radius: 40px;
+  background-color: $background-basic;
+  box-shadow: 0 0 25px 0 $shadow;
+
+
+  &::before,
+  &::after {
+    content: "";
+    position: absolute;
+    right: 32px;
+    left: 32px;
+
+    height: 24px;
+    background-color: transparent;
+  }
+
+  &::before {
+    top: 6px;
+    background-image: linear-gradient(to bottom, $background-basic, $background-basic 30%, rgba(255, 255, 255, 0%));
+  }
+
+  &::after {
+    bottom: 6px;
+    background-image: linear-gradient(to top, $background-basic, $background-basic 30%, rgba(255, 255, 255, 0%));
+  }
+}
+
+.info__track {
+  height: 57vh;
+  overflow-y: auto;
+
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+.info__text {
+  margin: 0;
+  padding: 16px 0 24px 0;
+  font-size: 24px;
+  line-height: 32px;
+  font-weight: 400;
+  user-select: none;
+}
+
+.info__parag {
+  margin-top: 0;
+  margin-bottom: 12px;
+
+  &:last-of-type {
+    margin-bottom: 34px;
+  }
+}
+
+.info__cite {
+  font-style: italic;
+}

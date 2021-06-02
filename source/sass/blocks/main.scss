@@ -1,0 +1,141 @@
+@keyframes pulse {
+  0% {
+    transform: translateY(-50%) scale(1.1);
+  }
+
+  50% {
+    transform: translateY(-50%) scale(0.95);
+  }
+
+  100% {
+    transform: translateY(-50%) scale(1.1);
+  }
+}
+
+.main {
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+
+    width: 300vw;
+  }
+}
+
+.main__slider {
+  transform: rotate(-90deg);
+}
+
+.main__track {
+  position: relative;
+  display: flex;
+  height: 100vh;
+  transform: rotate(90deg);
+  transition-property: transform;
+  transition-duration: 600ms;
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+
+    width: 300%;
+    background-repeat: no-repeat;
+    background-position: left top;
+    background-size: 100% 100%;
+    background-image: url("../img/background.jpg");
+    z-index: -1;
+  }
+}
+
+.main__slide {
+  position: relative;
+  display: flex;
+  align-items: center;
+  flex: 0 0 100vw;
+  padding: 80px 64px;
+}
+
+.main__slide-button {
+  position: absolute;
+  top: 50%;
+  right: 20px;
+  transform: translateY(-50%);
+  margin: 0;
+  padding: 0;
+  width: 30px;
+  height: 45px;
+  border: none;
+  background-color: transparent;
+  touch-action: none;
+  user-select: none;
+  cursor: pointer;
+  animation-name: pulse;
+  animation-duration: 2s;
+  animation-timing-function: ease-in;
+  animation-iteration-count: infinite;
+
+  &::before,
+  &::after {
+    content: "";
+    position: absolute;
+    right: 0;
+    width: 25px;
+    height: 3px;
+    border-radius: 100em;
+    background-color: $accent;
+    box-shadow: 0 0 8px 0 $shadow-dark;
+    transform-origin: 100% 50%;
+  }
+
+  &::before {
+    transform: translateY(1px) rotate(60deg);
+  }
+
+  &::after {
+    transform: translateY(-1px) rotate(-60deg);
+  }
+}
+
+.main__title-wrapper {
+  position: relative;
+}
+
+.main__title {
+  margin: 0;
+  font-size: 102px;
+  line-height: 110px;
+  font-weight: 300;
+  letter-spacing: 7px;
+  text-transform: uppercase;
+}
+
+.main__title-small {
+  display: block;
+  margin-bottom: 20px;
+  font-size: 28px;
+  line-height: 34px;
+  letter-spacing: 1px;
+}
+
+.main__title-accent {
+  font-weight: 700;
+}
+
+.main__title-bottomline {
+  padding-right: 350px;
+}
+
+.main__link {
+  position: absolute;
+  bottom: 16px;
+  left: 510px;
+  max-width: 300px;
+}
